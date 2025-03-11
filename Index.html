@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      position: relative;
+      transition: background-color 1s ease-in-out;
+      color: #333;
+    }
+
+    h1 {
+      position: absolute;
+      top: 50px;
+      width: 100%;
+      text-align: center;
+      font-size: 3em;
+    }
+
+    .message {
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      position: absolute;
+      width: 100%;
+    }
+
+    .message.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Wie ben ik</h1>
+
+  <div class="message">Hoi! Mijn naam is Luka.</div>
+  <div class="message">Ik ben 13 jaar oud.</div>
+  <div class="message">Ik maak applicaties voor mensen in Python.</div>
+  <div class="message">Voor meer informatie over mijn product, ga naar producten.</div>
+  <div class="message">Bedankt voor het lezen!</div>
+
+  <script>
+    const messages = document.querySelectorAll('.message');
+    const colors = ['#ff9999', '#99ccff', '#ccffcc', '#ffff99', '#ffccff']; // background colors
+    const fontSizes = ['1.5em', '2em', '2.5em', '3em', '3.5em']; // font sizes
+    let current = 0;
+    let baseTop = 250; // Starting top position
+    const topStep = 50; // How much further down each time
+
+    function showMessage(index) {
+      messages.forEach((msg, i) => {
+        msg.classList.remove('visible');
+      });
+
+      const message = messages[index];
+      message.classList.add('visible');
+
+      // Change background color
+      document.body.style.backgroundColor = colors[index % colors.length];
+
+      // Change font size
+      message.style.fontSize = fontSizes[index % fontSizes.length];
+
+      // Move it down
+      message.style.top = `${baseTop + (index * topStep)}px`;
+    }
+
+    function startSequence() {
+      showMessage(current);
+
+      setInterval(() => {
+        current = (current + 1) % messages.length;
+        showMessage(current);
+      }, 4000); // Change every 4 seconds
+    }
+
+    window.addEventListener('load', startSequence);
+  </script>
+
+</body>
+</html>
